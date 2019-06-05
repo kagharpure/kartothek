@@ -171,27 +171,13 @@ thrown if the schemas differ across datasets.
 For example, trying to run this will result in an error:
 
 .. ipython:: python
+   :okexcept:
 
    dm = store_dataframes_as_dataset(
       store, "yet_another_unique_dataset_identifier", [df, df2], metadata_version=4
    )
 
 But this will run fine:
-
-.. ipython:: python
-
-   dm = store_dataframes_as_dataset(
-      store, "yet_another_unique_dataset_identifier", [df, another_df], metadata_version=4
-   )
-
-
-As noted at the beginning of this guide, ``kartothek`` is designed for large
-datasets with contents that are too large to be held in a single machine. While
-small, in-memory dataframes are good for getting started and learning the core
-concepts, in a production setting a way to write data in batches is useful.
-For this purpose, ``kartothek`` offers :func:`kartothek.io.eager.update_dataset_from_dataframes`
-and :func:`kartothek.io.iter.update_dataset_from_dataframes__iter`. To see how to use
-these, lets generate another dataframe with the same schema as our first one:
 
 .. ipython:: python
 
@@ -206,6 +192,19 @@ these, lets generate another dataframe with the same schema as our first one:
        }
    )
    another_df
+
+   dm = store_dataframes_as_dataset(
+      store, "yet_another_unique_dataset_identifier", [df, another_df], metadata_version=4
+   )
+
+As noted at the beginning of this guide, ``kartothek`` is designed for large
+datasets with contents that are too large to be held in a single machine. While
+small, in-memory dataframes are good for getting started and learning the core
+concepts, in a production setting a way to write data in batches is useful.
+For this purpose, ``kartothek`` offers :func:`kartothek.io.eager.update_dataset_from_dataframes`
+and :func:`kartothek.io.iter.update_dataset_from_dataframes__iter`. To see how to use
+these, lets reuse ``another_df`` from the non-working example above:
+
 
 Now let us update our initial ``kartothek`` dataset with this new dataframe:
 
@@ -291,6 +290,7 @@ A subset of tables CANNOT be updated and running the following update
 example instead of the one above will throw a ``ValueError``:
 
 .. ipython:: python
+   :okexcept:
 
    another_df2 = pd.DataFrame(
        {
