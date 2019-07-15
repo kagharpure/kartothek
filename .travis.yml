@@ -21,7 +21,7 @@ before_install:
   - pip3 install --upgrade pip
   - pip3 install pip-tools
   - ./compile_requirements.sh
-  - python setup.py bdist_wheel
+  - python3 setup.py bdist_wheel
 
 install:
   - pip3 install -r test-requirements-pinned.txt
@@ -31,10 +31,10 @@ install:
 before_script:
   - pip3 freeze
   - pip3 install pre-commit && pre-commit run -a
-  - python setup.py docs
+  - python3 setup.py docs
 
 script:
-  - pytest
+  - python3 -m pytest
 
 after_success:
   - pip3 install codecov
@@ -46,6 +46,7 @@ matrix:
       os: osx
       osx_image: xcode10.2
       language: shell
+      before_script:
 deploy:
   provider: pypi
   user: fjetter
