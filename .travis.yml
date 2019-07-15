@@ -46,7 +46,9 @@ matrix:
       os: osx
       osx_image: xcode10.2
       language: shell
-
+      python:
+        - 3.6
+        - 3.7
 deploy:
   provider: pypi
   user: fjetter
