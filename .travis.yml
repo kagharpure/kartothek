@@ -44,9 +44,7 @@ matrix:
   include:
     - name: "OSX"
       os: osx
-      osx_image: xcode10.2
       language: shell
-      before_script:
 deploy:
   provider: pypi
   user: fjetter
