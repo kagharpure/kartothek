@@ -9,9 +9,9 @@ python:
 
 fast_finish: true
 
-os:
-  - osx
-  - linux
+#os:
+#  - osx
+#  - linux
 
 env:
   - KARTOTHEK_ARROW_VERSION=0.12.1
@@ -40,6 +40,13 @@ after_success:
   - pip install codecov
   - codecov
 
+matrix:
+  include:
+    - name: "OSX"
+      os: osx
+      osx_image: xcode10.2
+      language: shell
+
 deploy:
   provider: pypi
   user: fjetter
@@ -49,9 +56,3 @@ deploy:
     tags: true
   distributions: "sdist bdist_wheel"
   skip_existing: true
-
-matrix:
-  fast_finish: true
-  include:
-  - name: "Test on OSX"
-    os: osx
