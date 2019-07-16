@@ -7,10 +7,6 @@ python:
   - 3.6
   - 3.7
 
-os:
-  - linux
-  - osx
-
 env:
   - KARTOTHEK_ARROW_VERSION=0.12.1
   - KARTOTHEK_ARROW_VERSION=0.13.0
@@ -39,10 +35,15 @@ matrix:
   include:
     - name: "OSX + python3.7"
       os: osx
+      addons:
+        homebrew:
+          packages:
+            - python3
+          update: true
       before_install:
-        - brew update
-        - brew install python3
-        - pip3 install virtualenv
+#        - brew update
+#        - brew install python3
+#        - pip3 install virtualenv
         - ./before_install.sh
 
 
