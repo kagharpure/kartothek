@@ -15,6 +15,21 @@ env:
     - HOMEBREW_NO_INSTALL_CLEANUP=1
     - HOMEBREW_NO_ANALYTICS=1
 
+cache:
+  directories:
+    - "$HOME/Library/Caches/Homebrew"
+    - /usr/local/Homebrew
+
+before_cache:
+  - brew cleanup
+  - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
+
+addons:
+  homebrew:
+    packages:
+      - pyenv
+    update: true
+
 before_install:
   - pip install --upgrade pip
   - pip install pip-tools
@@ -73,18 +88,18 @@ deploy:
   distributions: "sdist bdist_wheel"
   skip_existing: true
 
-if: os = osx
-cache:
-  directories:
-    - "$HOME/Library/Caches/Homebrew"
-    - /usr/local/Homebrew
-
-before_cache:
-  - brew cleanup
-  - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
-
-addons:
-  homebrew:
-    packages:
-      - pyenv
-    update: true
+#if: os = osx
+#cache:
+#  directories:
+#    - "$HOME/Library/Caches/Homebrew"
+#    - /usr/local/Homebrew
+#
+#before_cache:
+#  - brew cleanup
+#  - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
+#
+#addons:
+#  homebrew:
+#    packages:
+#      - pyenv
+#    update: true
