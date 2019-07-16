@@ -13,6 +13,7 @@ env:
 
 before_install:
   - ./before_install.sh
+  - ./compile
 
 install:
   - pip install -r test-requirements-pinned.txt
@@ -35,6 +36,7 @@ matrix:
   include:
     - name: "OSX + python3.7"
       os: osx
+      language: shell
       addons:
         homebrew:
           packages:
