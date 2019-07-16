@@ -40,7 +40,6 @@ matrix:
       os: osx
       language: shell
       env:
-        - PYENV_VERSION=3.7
         - HOMEBREW_NO_INSTALL_CLEANUP=1
         - HOMEBREW_NO_ANALYTICS=1
 
@@ -57,11 +56,10 @@ matrix:
         homebrew:
           packages:
             - pyenv
+          update: true
 
       before_install:
-        - brew upgrade pyenv
-        - pyenv install 3.7
-        - pyenv local 3.7
+        - pyenv install --list
 
 #    - name: "OSX + python3.7"
 #      os: osx
