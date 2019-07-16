@@ -12,8 +12,9 @@ env:
   - KARTOTHEK_ARROW_VERSION=0.13.0
 
 before_install:
-#  - ./before_install.sh
+  - ./before_install.sh
   - ./compile_requirements.sh
+  - python setup.py bdist_wheel
 
 install:
   - pip install -r test-requirements-pinned.txt
@@ -41,7 +42,6 @@ matrix:
         homebrew:
           packages:
             - python3
-          update: true
       before_install:
 #        - brew update
 #        - brew install python3
