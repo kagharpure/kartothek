@@ -18,7 +18,7 @@ env:
       - "$HOME/Library/Caches/Homebrew"
       - /usr/local/Homebrew
   before_cache:
-    - brew cleanup
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cleanup; fi
     - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
   addons:
     homebrew:
@@ -56,7 +56,7 @@ matrix:
       os: osx
       language: shell
       env:
-        - PYV=3.7
+        - PYENV_VERSION=3.7
       before_install:
         - pyenv install 3.7
         - pyenv local 3.7
