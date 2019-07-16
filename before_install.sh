@@ -1,16 +1,17 @@
 #!/bin/bash
 
-if [ ${TRAVIS_PYTHON_VERSION:0:3} = "$PY36V" ]; then
-    export PY36V=$TRAVIS_PYTHON_VERSION
-elif [ ${TRAVIS_PYTHON_VERSION:0:3} = "$PY37V" ]; then
-    export PY37V=$TRAVIS_PYTHON_VERSION
+if [ "$TRAVIS_PYTHON_VERSION" = 3.6 ]; then
+    echo "$TRAVIS_PYTHON_VERSION" > ./python_versions/pyv3.6
+    cat ./python_versions/pyv3.6
+elif [ "$TRAVIS_PYTHON_VERSION" = 3.7 ]; then
+    echo "$TRAVIS_PYTHON_VERSION" > ./python_versions/pyv3.7
+    cat ./python_versions/pyv3.7
 fi
 
 if [ $TRAVIS_OS_NAME = "osx" ]; then
     echo "Got OSX"
-    echo $PY36V
-    echo $PY37V
-
+    cat ./python_versions/pyv3.6
+    cat ./python_versions/pyv3.7
 fi
 
 pip install --upgrade pip

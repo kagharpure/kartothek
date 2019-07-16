@@ -8,6 +8,7 @@ python:
   - 3.7
 
 stages:
+  - prep_cache
   - test
   - osx_tests
   - integration_tests
@@ -17,16 +18,15 @@ env:
   global:
     - HOMEBREW_NO_INSTALL_CLEANUP=1
     - HOMEBREW_NO_ANALYTICS=1
-    - PY36V=3.6
-    - PY37V=3.7
   matrix:
     - KARTOTHEK_ARROW_VERSION=0.12.1
     - KARTOTHEK_ARROW_VERSION=0.13.0
 
-#cache:
-#  directories:
-#    - "$HOME/Library/Caches/Homebrew"
-#    - /usr/local/Homebrew
+cache:
+  directories:
+    - "$HOME/Library/Caches/Homebrew"
+    - /usr/local/Homebrew
+    - python_versions
 #
 #before_cache:
 #  - brew cleanup
@@ -38,10 +38,6 @@ env:
 #    update: true
 
 before_install:
-#  - pip install --upgrade pip
-#  - pip install pip-tools
-#  - ./compile_requirements.sh
-#  - python setup.py bdist_wheel
   - ./before_install.sh
 
 install:
@@ -63,6 +59,10 @@ after_success:
 
 matrix:
   include:
+    - name: "prep cache"
+      stage: prep_cache
+      script:
+        - mkdir -p ./python_versions
     - name: "OSX + python3.7"
       stage: osx_tests
       os: osx
@@ -91,7 +91,7 @@ matrix:
 #          update: true
 #          packages:
 #            - pyenv
-    - name: deploy
+    - name: "deploy"
       stage: deploy
       deploy:
         provider: pypi
