@@ -35,6 +35,16 @@ after_success:
   - pip install codecov
   - codecov
 
+matrix:
+  include:
+    - name: "OSX + python3.7"
+      before_install:
+        - brew update
+        - brew install python3
+        - pip3 install virtualenv
+        - ./before_install.sh
+
+
 deploy:
   provider: pypi
   user: fjetter
