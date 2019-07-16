@@ -12,7 +12,7 @@ env:
   - KARTOTHEK_ARROW_VERSION=0.13.0
 
 before_install:
-  - ./before_install.sh
+#  - ./before_install.sh
   - ./compile_requirements.sh
 
 install:
