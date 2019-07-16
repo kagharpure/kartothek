@@ -42,6 +42,7 @@ matrix:
       env:
         - HOMEBREW_NO_INSTALL_CLEANUP=1
         - HOMEBREW_NO_ANALYTICS=1
+        - PYV=3.7
       cache:
         directories:
           - "$HOME/Library/Caches/Homebrew"
@@ -54,11 +55,28 @@ matrix:
           update: true
           packages:
             - pyenv
-
-        #- python3 -m pip install --upgrade virtualenv
-        #- virtualenv -p python3 --system-site-packages "$HOME/venv"
-        #- source "$HOME/venv/bin/activate"
-
+      before_install:
+        - pyenv
+        - pyenv install 3.7
+        - pyenv local 3.7
+#    - name: "OSX + python3.7"
+#      os: osx
+#      language: shell
+#      env:
+#        - HOMEBREW_NO_INSTALL_CLEANUP=1
+#        - HOMEBREW_NO_ANALYTICS=1
+#      cache:
+#        directories:
+#          - "$HOME/Library/Caches/Homebrew"
+#          - /usr/local/Homebrew
+#      before_cache:
+#        - brew cleanup
+#        - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
+#      addons:
+#        homebrew:
+#          update: true
+#          packages:
+#            - pyenv
 
 deploy:
   provider: pypi
