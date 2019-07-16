@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ ${TRAVIS_PYTHON_VERSION:0:3} = $PY36V ]; then
+if [ ${TRAVIS_PYTHON_VERSION:0:3} = "$PY36V" ]; then
     export PY36V=$TRAVIS_PYTHON_VERSION
-elif [ ${TRAVIS_PYTHON_VERSION:0:3} = $PY37V ]; then
+elif [ ${TRAVIS_PYTHON_VERSION:0:3} = "$PY37V" ]; then
     export PY37V=$TRAVIS_PYTHON_VERSION
 fi
 
