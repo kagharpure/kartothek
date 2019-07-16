@@ -8,12 +8,8 @@ python:
   - 3.7
 
 env:
-  global:
     - KARTOTHEK_ARROW_VERSION=0.12.1
     - KARTOTHEK_ARROW_VERSION=0.13.0
-  matrix:
-    - HOMEBREW_NO_INSTALL_CLEANUP=1
-    - HOMEBREW_NO_ANALYTICS=1
 
 cache:
   directories:
@@ -58,6 +54,10 @@ matrix:
     - name: "OSX + python3.7"
       os: osx
       language: shell
+      env:
+        - HOMEBREW_NO_INSTALL_CLEANUP=1
+        - HOMEBREW_NO_ANALYTICS=1
+
 
 #    - name: "OSX + python3.7"
 #      os: osx
