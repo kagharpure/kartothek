@@ -8,7 +8,7 @@ python:
   - 3.7
 
 stages:
-  - base_tests
+  - test
   - osx_tests
   - integration_tests
   - deploy
