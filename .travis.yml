@@ -8,8 +8,12 @@ python:
   - 3.7
 
 env:
-  - KARTOTHEK_ARROW_VERSION=0.12.1
-  - KARTOTHEK_ARROW_VERSION=0.13.0
+  global:
+    - KARTOTHEK_ARROW_VERSION=0.12.1
+    - KARTOTHEK_ARROW_VERSION=0.13.0
+  matrix:
+    - HOMEBREW_NO_INSTALL_CLEANUP=1
+    - HOMEBREW_NO_ANALYTICS=1
 
 before_install:
   - pip install --upgrade pip
@@ -39,27 +43,6 @@ matrix:
     - name: "OSX + python3.7"
       os: osx
       language: shell
-#      env:
-#        - HOMEBREW_NO_INSTALL_CLEANUP=1
-#        - HOMEBREW_NO_ANALYTICS=1
-
-#      cache:
-#        directories:
-#          - "$HOME/Library/Caches/Homebrew"
-#          - /usr/local/Homebrew
-#
-#      before_cache:
-#        - brew cleanup
-#        - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
-#
-#      addons:
-#        homebrew:
-#          packages:
-#            - pyenv
-#          update: true
-
-      before_install:
-        - ./before_install.sh
 
 #    - name: "OSX + python3.7"
 #      os: osx
@@ -89,3 +72,19 @@ deploy:
     tags: true
   distributions: "sdist bdist_wheel"
   skip_existing: true
+
+if: os = osx
+cache:
+  directories:
+    - "$HOME/Library/Caches/Homebrew"
+    - /usr/local/Homebrew
+
+before_cache:
+  - brew cleanup
+  - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
+
+addons:
+  homebrew:
+    packages:
+      - pyenv
+    update: true
