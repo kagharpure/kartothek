@@ -5,5 +5,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     #brew install pyenv
     #pyenv install
     #source venv/bin/activate
-    which -a python
+    for p in $(which -a python); do
+        eval $($p --version)
+    done
 fi
