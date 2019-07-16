@@ -8,7 +8,5 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     which -a python
 fi
 
-#pip install --upgrade pip
-#  - pip install pip-tools
-#  - ./compile_requirements.sh
-#  - python setup.py bdist_wheel
+pip install --upgrade pip
+pip install pip-tools
