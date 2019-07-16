@@ -7,7 +7,19 @@ python:
   - 3.6
   - 3.7
 
+stages:
+  - base_tests
+  - osx_tests
+  - integration_tests
+  - deploy
+
 env:
+  global:
+    - HOMEBREW_NO_INSTALL_CLEANUP=1
+    - HOMEBREW_NO_ANALYTICS=1
+    - PY36V=3.6
+    - PY37V=3.7
+  matrix:
     - KARTOTHEK_ARROW_VERSION=0.12.1
     - KARTOTHEK_ARROW_VERSION=0.13.0
 
@@ -51,10 +63,8 @@ after_success:
 
 matrix:
   include:
-    - env:
-        - HOMEBREW_NO_INSTALL_CLEANUP=1
-        - HOMEBREW_NO_ANALYTICS=1
     - name: "OSX + python3.7"
+      stage: osx_tests
       os: osx
       language: shell
 
@@ -81,16 +91,17 @@ matrix:
 #          update: true
 #          packages:
 #            - pyenv
-
-deploy:
-  provider: pypi
-  user: fjetter
-  password:
-    secure: pO3DOtJa2xrqRWPUutUpF44veWQ34MoiAHLDXps+g//ZHLMqcdZ4YX2M4eHDUSDA9kqd0kc1Rj0un6mPzcKVq2c5AsceNT4qh0eojlStfqGh4Lr5EsfIs7nsrK+gtpKdvogECHxv+Rz07nFXKPqh2TGuIwiHmSVQ56Mo89S1xGD66mqEJf7MTyIM2vo/n9Bs4nWYapqDWs2ExkVfXfc1oasEyled3PF7NdtBokWhQmFcULBSunh57hFtPOuD4v2WyhAdnBR3ivzDYQS7n9+lOO6cdkdkZy0Agm0+FdP+18GFFcwHAamIPEAspfmI9+h+/3pm5TvUp5pU+lvuUtypp3eYt20AIYjmqUdDj8HHGSYINl9ef4zlQu+ARFWlO/+B8gtWjsBHtaJIq/wsBNsAJjjLZByHZwjzm+NQKTP7z18EtIhNqjIb/v/6Qgapo6BDjbbVajFLtj5esLcAAhg8Hw+wzoNxrOSnALDUiQd0Tro1DnXkl+WrTKtz0pu4h7yKpQiwOS6hv4ltjDyL7gyW+N9O2yAJBH8r6aI1UjyXyAO57v/GXjjF7JOTEnl9lvEufBFwnQYTjcoSo0bupXRELz1ytabk3IP5Z7meoAoA73DdyPYSltZx88SuP7jACZOjkXjOLrJi02V/vz8+bMl+I8M5MvPoTnLY7cn1cjZv4BU=
-  on:
-    tags: true
-  distributions: "sdist bdist_wheel"
-  skip_existing: true
+    - name: deploy
+      stage: deploy
+      deploy:
+        provider: pypi
+        user: fjetter
+        password:
+          secure: pO3DOtJa2xrqRWPUutUpF44veWQ34MoiAHLDXps+g//ZHLMqcdZ4YX2M4eHDUSDA9kqd0kc1Rj0un6mPzcKVq2c5AsceNT4qh0eojlStfqGh4Lr5EsfIs7nsrK+gtpKdvogECHxv+Rz07nFXKPqh2TGuIwiHmSVQ56Mo89S1xGD66mqEJf7MTyIM2vo/n9Bs4nWYapqDWs2ExkVfXfc1oasEyled3PF7NdtBokWhQmFcULBSunh57hFtPOuD4v2WyhAdnBR3ivzDYQS7n9+lOO6cdkdkZy0Agm0+FdP+18GFFcwHAamIPEAspfmI9+h+/3pm5TvUp5pU+lvuUtypp3eYt20AIYjmqUdDj8HHGSYINl9ef4zlQu+ARFWlO/+B8gtWjsBHtaJIq/wsBNsAJjjLZByHZwjzm+NQKTP7z18EtIhNqjIb/v/6Qgapo6BDjbbVajFLtj5esLcAAhg8Hw+wzoNxrOSnALDUiQd0Tro1DnXkl+WrTKtz0pu4h7yKpQiwOS6hv4ltjDyL7gyW+N9O2yAJBH8r6aI1UjyXyAO57v/GXjjF7JOTEnl9lvEufBFwnQYTjcoSo0bupXRELz1ytabk3IP5Z7meoAoA73DdyPYSltZx88SuP7jACZOjkXjOLrJi02V/vz8+bMl+I8M5MvPoTnLY7cn1cjZv4BU=
+        on:
+          tags: true
+        distributions: "sdist bdist_wheel"
+        skip_existing: true
 
 #if: os = osx
 #cache:
