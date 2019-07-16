@@ -7,6 +7,3 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     #source venv/bin/activate
     which -a python
 fi
-
-pip install --upgrade pip
-pip install pip-tools

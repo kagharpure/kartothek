@@ -12,7 +12,8 @@ dist: xenial
 #  - KARTOTHEK_ARROW_VERSION=0.13.0
 
 before_install:
-  - ./before_install.sh
+  - pip install --upgrade pip
+  - pip install pip-tools
   - ./compile_requirements.sh
   - python setup.py bdist_wheel
 
@@ -41,18 +42,19 @@ matrix:
       env:
         - HOMEBREW_NO_INSTALL_CLEANUP=1
         - HOMEBREW_NO_ANALYTICS=1
-      before_cache:
-        - brew cleanup
       cache:
         directories:
           - "$HOME/Library/Caches/Homebrew"
+          - /usr/local/Homebrew
+      before_cache:
+        - brew cleanup
+        - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
       addons:
         homebrew:
           update: true
           packages:
             - pyenv
-      before_install:
-        - ./before_install.sh
+
         #- python3 -m pip install --upgrade virtualenv
         #- virtualenv -p python3 --system-site-packages "$HOME/venv"
         #- source "$HOME/venv/bin/activate"
