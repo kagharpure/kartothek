@@ -38,6 +38,7 @@ after_success:
 matrix:
   include:
     - name: "OSX + python3.7"
+      os: osx
       before_install:
         - brew update
         - brew install python3
