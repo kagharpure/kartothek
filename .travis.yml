@@ -51,14 +51,14 @@ after_success:
   - pip install codecov
   - codecov
 
-#matrix:
-#  include:
-#    - env:
-#        - HOMEBREW_NO_INSTALL_CLEANUP=1
-#        - HOMEBREW_NO_ANALYTICS=1
-#    - name: "OSX + python3.7"
-#      os: osx
-#      language: shell
+matrix:
+  include:
+    - env:
+        - HOMEBREW_NO_INSTALL_CLEANUP=1
+        - HOMEBREW_NO_ANALYTICS=1
+    - name: "OSX + python3.7"
+      os: osx
+      language: shell
 
 #      env:
 #        - HOMEBREW_NO_INSTALL_CLEANUP=1
