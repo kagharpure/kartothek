@@ -3,15 +3,31 @@ language: python
 # needed for python>=3.7
 dist: xenial
 
-#python:
-#  - 3.6
-#  - 3.7
+python:
+  - 3.6
+  - 3.7
 
-#env:
-#  - KARTOTHEK_ARROW_VERSION=0.12.1
-#  - KARTOTHEK_ARROW_VERSION=0.13.0
+env:
+  - KARTOTHEK_ARROW_VERSION=0.12.1
+  - KARTOTHEK_ARROW_VERSION=0.13.0
+  - HOMEBREW_NO_INSTALL_CLEANUP=1
+  - HOMEBREW_NO_ANALYTICS=1
+
+  cache:
+    directories:
+      - "$HOME/Library/Caches/Homebrew"
+      - /usr/local/Homebrew
+  before_cache:
+    - brew cleanup
+    - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
+  addons:
+    homebrew:
+      packages:
+        - pyenv
+
 
 before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew upgrade pyenv; fi
   - pip install --upgrade pip
   - pip install pip-tools
   - ./compile_requirements.sh
@@ -40,23 +56,8 @@ matrix:
       os: osx
       language: shell
       env:
-        - HOMEBREW_NO_INSTALL_CLEANUP=1
-        - HOMEBREW_NO_ANALYTICS=1
         - PYV=3.7
-      cache:
-        directories:
-          - "$HOME/Library/Caches/Homebrew"
-          - /usr/local/Homebrew
-      before_cache:
-        - brew cleanup
-        - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
-      addons:
-        homebrew:
-          update: true
-          packages:
-            - pyenv
       before_install:
-        - pyenv
         - pyenv install 3.7
         - pyenv local 3.7
 #    - name: "OSX + python3.7"
