@@ -37,20 +37,20 @@ before_install:
   - ./ci/common_before_install.sh
 
 install:
-  - pip install -r test-requirements-pinned.txt
-  - pip install --no-deps dist/*
+  - pip3 install -r test-requirements-pinned.txt
+  - pip3 install --no-deps dist/*
 
 # If docs break or formatting, linting is off, I'd like to know immediately
 before_script:
-  - pip freeze
-  - pip install pre-commit && pre-commit run -a
-  - python setup.py docs
+  - pip3 freeze
+  - pip3 install pre-commit && pre-commit run -a
+  - python3 setup.py docs
 
 script:
   - pytest
 
 after_success:
-  - pip install codecov
+  - pip3 install codecov
   - codecov
 
 deploy:
