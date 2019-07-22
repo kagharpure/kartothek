@@ -11,33 +11,30 @@ env:
   - KARTOTHEK_ARROW_VERSION=0.12.1
   - KARTOTHEK_ARROW_VERSION=0.13.0
 
-#matrix:
-#  include:
-#    - name: "OSX + homebrew python3"
-#      os: osx
-#      language: shell
-#      env:
-#        - HOMEBREW_NO_INSTALL_CLEANUP=1
-#        - HOMEBREW_NO_ANALYTICS=1
-#      before_script:
-#        - ./travis/osx_python_venv_setup.sh
-#
-#cache:
-#  directories:
-#    - "$HOME/Library/Caches/Homebrew"
-#    - /usr/local/Homebrew
-#
-#before_cache:
-#  - brew cleanup
-#  - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
-#
-#addons:
-#  homebrew:
-#    packages: python3
-#    update: true
+matrix:
+  include:
+    - name: "OSX + homebrew python3"
+      os: osx
+      language: shell
+      env:
+        - HOMEBREW_NO_INSTALL_CLEANUP=1
+        - HOMEBREW_NO_ANALYTICS=1
+      before_install:
+          - ./ci/osx_before_install.sh
+      cache:
+        directories:
+          - "$HOME/Library/Caches/Homebrew"
+          - /usr/local/Homebrew
+      before_cache:
+        - brew cleanup
+        - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
+      addons:
+        homebrew:
+          packages: python3
+          update: true
 
 before_install:
-  - ./before_install.sh
+  - ./ci/common_before_install.sh
 
 install:
   - pip install -r test-requirements-pinned.txt
