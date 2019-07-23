@@ -4,12 +4,19 @@ language: python
 dist: xenial
 
 python:
-  - 3.6
-  - 3.7
+  - "3.6"
+  - "3.7"
 
 env:
   - KARTOTHEK_ARROW_VERSION=0.12.1
   - KARTOTHEK_ARROW_VERSION=0.13.0
+
+matrix:
+  include:
+    - name: "osx + python3.7"
+      os: osx
+      python: 3.7
+
 
 before_install:
   # https://github.com/JDASoftwareGroup/kartothek/issues/94
