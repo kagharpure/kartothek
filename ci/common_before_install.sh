@@ -1,7 +1,7 @@
 #!/bin/bash
 set -xeo pipefail
 
-pip install --upgrade pip
-pip install pip-tools
+pip3 install --upgrade pip
+pip3 install pip-tools
 ./ci/compile_requirements.sh
-python setup.py bdist_wheel
+python3 setup.py bdist_wheel
