@@ -21,12 +21,6 @@ matrix:
         - HOMEBREW_NO_ANALYTICS=1
       before_install:
           - ./ci/osx_before_install.sh
-          - ./ci/upgrade_pip_install_pip_tools.sh
-          - which pip
-          - which pip-compile
-          - ./ci/compile_requirements.sh
-          - which python
-          - python setup.py bdist_wheel
       cache:
         directories:
           - "$HOME/Library/Caches/Homebrew"
@@ -40,11 +34,9 @@ matrix:
           update: true
 
 before_install:
-  - ./ci/upgrade_pip_install_pip_tools.sh
-  - which pip
-  - which pip-compile
+  - pip install --upgrade pip!=19.2
+  - pip install pip-tools
   - ./ci/compile_requirements.sh
-  - which python
   - python setup.py bdist_wheel
 
 install:
