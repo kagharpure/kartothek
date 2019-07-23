@@ -40,6 +40,7 @@ before_install:
   - python setup.py bdist_wheel
 
 install:
+  - which pip
   - pip install -r test-requirements-pinned.txt
   - pip install --no-deps dist/*
 
