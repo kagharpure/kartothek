@@ -15,7 +15,8 @@ matrix:
   include:
     - name: "osx + python3.7"
       os: osx
-      python: 3.7
+      osx_image: xcode9.2
+      python: "3.7"
 
 
 before_install:
