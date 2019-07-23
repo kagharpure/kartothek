@@ -34,7 +34,11 @@ matrix:
           update: true
 
 before_install:
-  - ./ci/common_before_install.sh
+  #- ./ci/common_before_install.sh
+  - pip3 install --upgrade pip
+  - pip3 install pip-tools
+  - ./ci/compile_requirements.sh
+  - python3 setup.py bdist_wheel
 
 install:
   - pip3 install -r test-requirements-pinned.txt
