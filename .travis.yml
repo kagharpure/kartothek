@@ -8,8 +8,11 @@ python:
   - 3.7
 
 env:
-  - KARTOTHEK_ARROW_VERSION=0.12.1
   - KARTOTHEK_ARROW_VERSION=0.13.0
+  - KARTOTHEK_ARROW_VERSION=0.12.1
+
+before_cache: rm -f "$HOME/.cache/pip/log/debug.log"
+cache: pip
 
 before_install:
   # https://github.com/JDASoftwareGroup/kartothek/issues/94
@@ -34,6 +37,29 @@ script:
 after_success:
   - pip install codecov
   - codecov
+
+matrix:
+  allow_failures:
+    - os: osx
+  include:
+    - name: "osx + builtin python3"
+      os: osx
+      language: sh
+      before_cache:
+              - rm -f "$HOME/Library/Caches/pip/log/debug.log"
+      cache:
+        directories:
+          - "$HOME/Library/Caches/pip"
+      before_install:
+        - python3 --version
+        - python3 -m pip install --upgrade virtualenv
+        - virtualenv -p python3 "$HOME/ktk_venv"
+        - source "$HOME/ktk_venv/bin/activate"
+        # https://github.com/JDASoftwareGroup/kartothek/issues/94
+        - pip install --upgrade pip==19.1.*
+        - pip install pip-tools
+        - ./compile_requirements.sh
+        - python setup.py bdist_wheel
 
 deploy:
   provider: pypi
