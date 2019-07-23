@@ -19,8 +19,8 @@ matrix:
       env:
         - HOMEBREW_NO_INSTALL_CLEANUP=1
         - HOMEBREW_NO_ANALYTICS=1
-      before_install:
-          - ./ci/osx_before_install.sh
+#      before_install:
+#          - ./ci/osx_before_install.sh
       cache:
         directories:
           - "$HOME/Library/Caches/Homebrew"
