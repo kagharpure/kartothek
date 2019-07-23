@@ -5,33 +5,33 @@ dist: xenial
 
 python:
 #  - 3.6
-  - 3.7
+#  - 3.7
 
 env:
   - KARTOTHEK_ARROW_VERSION=0.12.1
-#  - KARTOTHEK_ARROW_VERSION=0.13.0
+  - KARTOTHEK_ARROW_VERSION=0.13.0
 
-#matrix:
-#  include:
-#    - name: "OSX + homebrew python3"
-#      os: osx
-#      language: shell
-#      env:
-#        - HOMEBREW_NO_INSTALL_CLEANUP=1
-#        - HOMEBREW_NO_ANALYTICS=1
-##      before_install:
-##          - ./ci/osx_before_install.sh
-#      cache:
-#        directories:
-#          - "$HOME/Library/Caches/Homebrew"
-#          - /usr/local/Homebrew
-#      before_cache:
-#        - brew cleanup
-#        - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
-#      addons:
-#        homebrew:
-#          packages: pyenv
-#          update: true
+matrix:
+  include:
+    - name: "OSX + homebrew python3"
+      os: osx
+      language: shell
+      env:
+        - HOMEBREW_NO_INSTALL_CLEANUP=1
+        - HOMEBREW_NO_ANALYTICS=1
+      before_install:
+          - ./ci/osx_before_install.sh
+      cache:
+        directories:
+          - "$HOME/Library/Caches/Homebrew"
+          - /usr/local/Homebrew
+      before_cache:
+        - brew cleanup
+        - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
+      addons:
+        homebrew:
+          packages: pyenv
+          update: true
 
 before_install:
   - ./ci/common_before_install.sh
