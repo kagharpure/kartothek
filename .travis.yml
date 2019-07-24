@@ -4,20 +4,15 @@ language: python
 dist: xenial
 
 python:
-#  - "3.6"
+  - "3.6"
   - "3.7"
 
 env:
-#  - KARTOTHEK_ARROW_VERSION=0.12.1
-#  - KARTOTHEK_ARROW_VERSION=0.13.0
+  - KARTOTHEK_ARROW_VERSION=0.12.1
+  - KARTOTHEK_ARROW_VERSION=0.13.0
 
-matrix:
-  include:
-    - name: "osx + python3.7"
-      os: osx
-      osx_image: xcode9.2
-      python: 3.7-dev
-
+before_cache: rm -f "$HOME/.cache/pip/log/debug.log"
+cache: pip
 
 before_install:
   # https://github.com/JDASoftwareGroup/kartothek/issues/94
@@ -32,7 +27,6 @@ install:
 
 # If docs break or formatting, linting is off, I'd like to know immediately
 before_script:
-  - pip install importlib.resources
   - pip freeze
   - pip install pre-commit && pre-commit run -a
   - python setup.py docs
@@ -43,6 +37,32 @@ script:
 after_success:
   - pip install codecov
   - codecov
+
+matrix:
+  include:
+    - name: "osx + python3.7"
+      os: osx
+      language: sh
+      env:
+        - HOMEBREW_NO_INSTALL_CLEANUP=1
+        - HOMEBREW_NO_ANALYTICS=1
+      before_cache:
+        - rm -f "$HOME/Library/Caches/pip/log/debug.log"
+      cache:
+        directories:
+          - "$HOME/Library/Caches/pip"
+      addons:
+        homebrew:
+          packages: python3
+      before_install:
+        - python3 -m pip install --upgrade virtualenv
+        - virtualenv -p python3 --system-site-packages "$HOME/venv"
+        - source "$HOME/venv/bin/activate"
+        # https://github.com/JDASoftwareGroup/kartothek/issues/94
+        - pip install --upgrade pip==19.1.*
+        - pip install pip-tools
+        - ./compile_requirements.sh
+        - python setup.py bdist_wheel
 
 deploy:
   provider: pypi
