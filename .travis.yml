@@ -8,11 +8,8 @@ python:
   - "3.7"
 
 env:
-  - KARTOTHEK_ARROW_VERSION=0.12.1
   - KARTOTHEK_ARROW_VERSION=0.13.0
-
-#before_cache: rm -f "$HOME/.cache/pip/log/debug.log"
-#cache: pip
+  - KARTOTHEK_ARROW_VERSION=0.12.1
 
 before_install:
   # https://github.com/JDASoftwareGroup/kartothek/issues/94
@@ -22,13 +19,11 @@ before_install:
   - python setup.py bdist_wheel
 
 install:
-  - which pip
   - pip install -r test-requirements-pinned.txt
   - pip install --no-deps dist/*
 
 # If docs break or formatting, linting is off, I'd like to know immediately
 before_script:
-  - which pip
   - pip freeze
   - pip install pre-commit && pre-commit run -a
   - python setup.py docs
@@ -47,36 +42,14 @@ matrix:
     - name: "osx + builtin python3"
       os: osx
       language: sh
-#      env:
-#        - HOMEBREW_NO_INSTALL_CLEANUP=1
-#        - HOMEBREW_NO_ANALYTICS=1
-#      before_cache:
-#        - brew cleanup
-#        - rm -f "$HOME/Library/Caches/pip/log/debug.log"
-#      cache:
-#        directories:
-#          - "$HOME/Library/Caches/Homebrew"
-#          - "$HOME/Library/Caches/pip"
-#      addons:
-#        homebrew:
-#          packages: python3
-#          update: true
       before_install:
-#        - which python
-#        - which python3
-#        - python --version
-#        - python3 --version
         - python3 -m pip install --upgrade virtualenv
         - virtualenv -p python3 --system-site-packages "$HOME/ktk_venv"
         - source "$HOME/ktk_venv/bin/activate"
         # https://github.com/JDASoftwareGroup/kartothek/issues/94
-        - which pip
         - pip install --upgrade pip==19.1.*
-        - which pip
         - pip install pip-tools
-        - which pip-compile
         - ./compile_requirements.sh
-        - which python
         - python setup.py bdist_wheel
 
 deploy:
