@@ -32,6 +32,7 @@ install:
 
 # If docs break or formatting, linting is off, I'd like to know immediately
 before_script:
+  - pip install importlib.resources
   - pip freeze
   - pip install pre-commit && pre-commit run -a
   - python setup.py docs
