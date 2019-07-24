@@ -12,8 +12,6 @@ env:
 #  - KARTOTHEK_ARROW_VERSION=0.13.0
 
 matrix:
-  allow_failures:
-    - os: osx
   include:
     - name: "OSX + homebrew python3"
       os: osx
@@ -45,20 +43,20 @@ before_install:
   - python setup.py bdist_wheel
 
 install:
-  - pip3 install -r test-requirements-pinned.txt
-  - pip3 install --no-deps dist/*
+  - pip install -r test-requirements-pinned.txt
+  - pip install --no-deps dist/*
 
 # If docs break or formatting, linting is off, I'd like to know immediately
 before_script:
-  - pip3 freeze
-  - pip3 install pre-commit && pre-commit run -a
-  - python3 setup.py docs
+  - pip freeze
+  - pip install pre-commit && pre-commit run -a
+  - python setup.py docs
 
 script:
-  - python3 -m pytest
+  - pytest
 
 after_success:
-  - pip3 install codecov
+  - pip install codecov
   - codecov
 
 deploy:
