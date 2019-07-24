@@ -3,12 +3,12 @@ language: python
 # needed for python>=3.7
 dist: xenial
 
-#python:
-#  - 3.6
+python:
+  - 3.6
 #  - 3.7
 #
-#env:
-#  - KARTOTHEK_ARROW_VERSION=0.12.1
+env:
+  - KARTOTHEK_ARROW_VERSION=0.12.1
 #  - KARTOTHEK_ARROW_VERSION=0.13.0
 
 matrix:
@@ -34,27 +34,26 @@ matrix:
           update: true
 
 before_install:
-  - pip install --upgrade pip!=19.2
+  - pip install --upgrade pip==19.1.*
   - pip install pip-tools
   - ./ci/compile_requirements.sh
   - python setup.py bdist_wheel
 
 install:
-  - which pip
-  - pip install -r test-requirements-pinned.txt
-  - pip install --no-deps dist/*
+  - pip3 install -r test-requirements-pinned.txt
+  - pip3 install --no-deps dist/*
 
 # If docs break or formatting, linting is off, I'd like to know immediately
 before_script:
-  - pip freeze
-  - pip install pre-commit && pre-commit run -a
-  - python setup.py docs
+  - pip3 freeze
+  - pip3 install pre-commit && pre-commit run -a
+  - python3 setup.py docs
 
 script:
-  - pytest
+  - python3 -m pytest
 
 after_success:
-  - pip install codecov
+  - pip3 install codecov
   - codecov
 
 deploy:
