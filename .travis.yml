@@ -12,6 +12,8 @@ env:
 #  - KARTOTHEK_ARROW_VERSION=0.13.0
 
 matrix:
+  allow_failures:
+    - os: osx
   include:
     - name: "OSX + homebrew python3"
       os: osx
@@ -21,17 +23,20 @@ matrix:
         - HOMEBREW_NO_ANALYTICS=1
       before_install:
           - ./ci/osx_before_install.sh
+          - pip install --upgrade pip==19.1.*
+            pip install pip-tools
+            ./ci/compile_requirements.sh
+            python setup.py bdist_wheel
+
       cache:
+        - pip
         directories:
-          - "$HOME/Library/Caches/Homebrew"
-          - /usr/local/Homebrew
+          - "$HOME/Library/Caches/pip"
       before_cache:
-        - brew cleanup
-        - find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
+        - rm -f "$HOME/Library/Caches/pip/log/debug.log"
       addons:
         homebrew:
-          packages: pyenv
-          update: true
+          packages: python3
 
 before_install:
   - pip install --upgrade pip==19.1.*
