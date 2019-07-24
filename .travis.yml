@@ -12,11 +12,12 @@ env:
   - KARTOTHEK_ARROW_VERSION=0.12.1
 
 before_install:
-  # https://github.com/JDASoftwareGroup/kartothek/issues/94
-  - pip install --upgrade pip==19.1.*
-  - pip install pip-tools
-  - ./compile_requirements.sh
-  - python setup.py bdist_wheel
+#  # https://github.com/JDASoftwareGroup/kartothek/issues/94
+#  - pip install --upgrade pip==19.1.*
+#  - pip install pip-tools
+#  - ./ci/compile_requirements.sh
+#  - python setup.py bdist_wheel
+  - ./ci/common_before_install_steps.sh
 
 install:
   - pip install -r test-requirements-pinned.txt
@@ -43,14 +44,16 @@ matrix:
       os: osx
       language: sh
       before_install:
-        - python3 -m pip install --upgrade virtualenv
-        - virtualenv -p python3 --system-site-packages "$HOME/ktk_venv"
-        - source "$HOME/ktk_venv/bin/activate"
-        # https://github.com/JDASoftwareGroup/kartothek/issues/94
-        - pip install --upgrade pip==19.1.*
-        - pip install pip-tools
-        - ./compile_requirements.sh
-        - python setup.py bdist_wheel
+#        - python3 -m pip install --upgrade virtualenv
+#        - virtualenv -p python3 --system-site-packages "$HOME/ktk_venv"
+#        - source "$HOME/ktk_venv/bin/activate"
+        - ./ci/create_venv_for_osx.sh
+#        # https://github.com/JDASoftwareGroup/kartothek/issues/94
+#        - pip install --upgrade pip==19.1.*
+#        - pip install pip-tools
+#        - ./compile_requirements.sh
+#        - python setup.py bdist_wheel
+        - ./ci/common_before_install_steps.sh
 
 deploy:
   provider: pypi
