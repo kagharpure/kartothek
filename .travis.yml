@@ -59,8 +59,10 @@ matrix:
         - virtualenv -p python3 --system-site-packages "$HOME/venv"
         - source "$HOME/venv/bin/activate"
         # https://github.com/JDASoftwareGroup/kartothek/issues/94
+        - which pip
         - pip install --upgrade pip==19.1.*
         - pip install pip-tools
+        - which pip-tools
         - ./compile_requirements.sh
         - python setup.py bdist_wheel
 
