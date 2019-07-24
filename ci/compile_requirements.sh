@@ -1,6 +1,9 @@
 #!/bin/bash
 set -xeo pipefail
 
+which pip
+which pip-compile
+
 productionIndex=platform
 developmentIndex=platform_dev
 

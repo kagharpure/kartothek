@@ -20,19 +20,23 @@ before_install:
   - ./ci/common_before_install_steps.sh
 
 install:
+  - which pip
   - pip install -r test-requirements-pinned.txt
   - pip install --no-deps dist/*
 
 # If docs break or formatting, linting is off, I'd like to know immediately
 before_script:
+  - which pip
   - pip freeze
   - pip install pre-commit && pre-commit run -a
   - python setup.py docs
 
 script:
+  - which python
   - pytest --cov kartothek --cov-report xml --cov-report html
 
 after_success:
+  - which pip
   - pip install codecov
   - codecov
 
@@ -47,13 +51,12 @@ matrix:
 #        - python3 -m pip install --upgrade virtualenv
 #        - virtualenv -p python3 --system-site-packages "$HOME/ktk_venv"
 #        - source "$HOME/ktk_venv/bin/activate"
-        - ./ci/create_venv_for_osx.sh
+        - ./ci/osx_before_install.sh
 #        # https://github.com/JDASoftwareGroup/kartothek/issues/94
 #        - pip install --upgrade pip==19.1.*
 #        - pip install pip-tools
 #        - ./compile_requirements.sh
 #        - python setup.py bdist_wheel
-        - ./ci/common_before_install_steps.sh
 
 deploy:
   provider: pypi
