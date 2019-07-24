@@ -39,21 +39,26 @@ after_success:
   - codecov
 
 matrix:
+  allow_failures:
+    - os: osx
   include:
-    - name: "osx + python3.7"
+    - name: "osx + (homebrew's) python3.7"
       os: osx
       language: sh
       env:
         - HOMEBREW_NO_INSTALL_CLEANUP=1
         - HOMEBREW_NO_ANALYTICS=1
       before_cache:
+        - brew cleanup
         - rm -f "$HOME/Library/Caches/pip/log/debug.log"
       cache:
         directories:
+          - "$HOME/Library/Caches/Homebrew"
           - "$HOME/Library/Caches/pip"
       addons:
         homebrew:
           packages: python3
+          update: true
       before_install:
         - python3 -m pip install --upgrade virtualenv
         - virtualenv -p python3 --system-site-packages "$HOME/venv"
