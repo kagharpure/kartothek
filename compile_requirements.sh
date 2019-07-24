@@ -4,7 +4,7 @@ set -xeo pipefail
 productionIndex=platform
 developmentIndex=platform_dev
 
-which pip-tools
+which pip-compile
 
 if [ ! -z ${KARTOTHEK_ARROW_VERSION} ];
 then

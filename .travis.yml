@@ -62,7 +62,7 @@ matrix:
         - which pip
         - pip install --upgrade pip==19.1.*
         - pip install pip-tools
-        - which pip-tools
+        - which pip-compile
         - ./compile_requirements.sh
         - python setup.py bdist_wheel
 
