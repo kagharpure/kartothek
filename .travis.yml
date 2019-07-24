@@ -11,8 +11,8 @@ env:
   - KARTOTHEK_ARROW_VERSION=0.12.1
   - KARTOTHEK_ARROW_VERSION=0.13.0
 
-before_cache: rm -f "$HOME/.cache/pip/log/debug.log"
-cache: pip
+#before_cache: rm -f "$HOME/.cache/pip/log/debug.log"
+#cache: pip
 
 before_install:
   # https://github.com/JDASoftwareGroup/kartothek/issues/94
@@ -44,7 +44,7 @@ matrix:
   allow_failures:
     - os: osx
   include:
-    - name: "osx + (homebrew's) python3.7"
+    - name: "osx + builtin python3"
       os: osx
       language: sh
 #      env:
@@ -62,21 +62,22 @@ matrix:
 #          packages: python3
 #          update: true
       before_install:
-        - which python
-        - which python3
-        - python --version
-        - python3 --version
-#        - python3 -m pip install --upgrade virtualenv
-#        - virtualenv -p python3 --system-site-packages "$HOME/venv"
-#        - source "$HOME/venv/bin/activate"
-#        # https://github.com/JDASoftwareGroup/kartothek/issues/94
-#        - which pip
-#        - pip install --upgrade pip==19.1.*
-#        - pip install pip-tools
-#        - which pip-compile
-#        - ./compile_requirements.sh
 #        - which python
-#        - python setup.py bdist_wheel
+#        - which python3
+#        - python --version
+#        - python3 --version
+        - python3 -m pip install --upgrade virtualenv
+        - virtualenv -p python3 --system-site-packages "$HOME/ktk_venv"
+        - source "$HOME/ktk_venv/bin/activate"
+        # https://github.com/JDASoftwareGroup/kartothek/issues/94
+        - which pip
+        - pip install --upgrade pip==19.1.*
+        - which pip
+        - pip install pip-tools
+        - which pip-compile
+        - ./compile_requirements.sh
+        - which python
+        - python setup.py bdist_wheel
 
 deploy:
   provider: pypi
