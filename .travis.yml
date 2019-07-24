@@ -22,11 +22,13 @@ before_install:
   - python setup.py bdist_wheel
 
 install:
+  - which pip
   - pip install -r test-requirements-pinned.txt
   - pip install --no-deps dist/*
 
 # If docs break or formatting, linting is off, I'd like to know immediately
 before_script:
+  - which pip
   - pip freeze
   - pip install pre-commit && pre-commit run -a
   - python setup.py docs
@@ -69,6 +71,7 @@ matrix:
         - pip install pip-tools
         - which pip-compile
         - ./compile_requirements.sh
+        - which python
         - python setup.py bdist_wheel
 
 deploy:
