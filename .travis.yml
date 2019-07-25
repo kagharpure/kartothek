@@ -8,8 +8,8 @@ python:
   - 3.7
 
 env:
-  - KARTOTHEK_ARROW_VERSION=0.13.0
   - KARTOTHEK_ARROW_VERSION=0.12.1
+  - KARTOTHEK_ARROW_VERSION=0.13.0
 
 before_cache: rm -f "$HOME/.cache/pip/log/debug.log"
 cache: pip
@@ -45,6 +45,8 @@ matrix:
     - name: "osx + builtin python3"
       os: osx
       language: sh
+      env:
+        - KARTOTHEK_ARROW_VERSION=0.13.0
       before_cache:
               - rm -f "$HOME/Library/Caches/pip/log/debug.log"
       cache:
