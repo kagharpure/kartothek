@@ -12,11 +12,12 @@ env:
   - KARTOTHEK_ARROW_VERSION=0.13.0
 
 before_install:
-  # https://github.com/JDASoftwareGroup/kartothek/issues/94
-  - pip install --upgrade pip==19.1.*
-  - pip install pip-tools
-  - ./compile_requirements.sh
-  - python setup.py bdist_wheel
+#  # https://github.com/JDASoftwareGroup/kartothek/issues/94
+#  - pip install --upgrade pip==19.1.*
+#  - pip install pip-tools
+#  - ./compile_requirements.sh
+#  - python setup.py bdist_wheel
+  - before_install.sh
 
 install:
   - pip install -r test-requirements-pinned.txt
@@ -45,15 +46,16 @@ matrix:
       env:
         - KARTOTHEK_ARROW_VERSION=0.13.0
       before_install:
-        - python3 --version
-        - python3 -m pip install --upgrade virtualenv
-        - virtualenv -p python3 "$HOME/ktk_venv"
-        - source "$HOME/ktk_venv/bin/activate"
-        # https://github.com/JDASoftwareGroup/kartothek/issues/94
-        - pip install --upgrade pip==19.1.*
-        - pip install pip-tools
-        - ./compile_requirements.sh
-        - python setup.py bdist_wheel
+#        - python3 --version
+#        - python3 -m pip install --upgrade virtualenv
+#        - virtualenv -p python3 "$HOME/ktk_venv"
+#        - source "$HOME/ktk_venv/bin/activate"
+#        # https://github.com/JDASoftwareGroup/kartothek/issues/94
+#        - pip install --upgrade pip==19.1.*
+#        - pip install pip-tools
+#        - ./compile_requirements.sh
+#        - python setup.py bdist_wheel
+        - before_install.sh
 
 deploy:
   provider: pypi
