@@ -16,6 +16,6 @@ pip install --upgrade pip==19.1.*
 which pip
 pip install pip-tools
 which pip-compile
-./compile_requirements.sh
+source compile_requirements.sh
 which python
 python setup.py bdist_wheel

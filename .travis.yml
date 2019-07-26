@@ -59,7 +59,7 @@ matrix:
 #        - pip install pip-tools
 #        - ./compile_requirements.sh
 #        - python setup.py bdist_wheel
-        - ./before_install.sh
+        - source before_install.sh
 
 deploy:
   provider: pypi
