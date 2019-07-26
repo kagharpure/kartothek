@@ -41,7 +41,7 @@ matrix:
       env:
         - KARTOTHEK_ARROW_VERSION=0.13.0
       before_install:
-        - [ ! -z "$(which python3)" ] && [[ $(python3 --version | cut -d ' ' -f2) != 3.* ]] && exit 1
+        - [[ ! -z "$(which python3)" ]] && [[ $(python3 --version | cut -d ' ' -f2) != 3.* ]] && exit 1
         - python3 -m pip install --upgrade virtualenv
         - virtualenv -p python3 "$HOME/ktk_venv"
         - source "$HOME/ktk_venv/bin/activate"
